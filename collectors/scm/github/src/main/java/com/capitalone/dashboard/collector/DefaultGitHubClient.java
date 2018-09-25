@@ -93,6 +93,8 @@ public class DefaultGitHubClient implements GitHubClient {
         String personalAccessToken = (String) repo.getOptions().get("personalAccessToken");
         String decryptedPersonalAccessToken = decryptString(personalAccessToken, settings.getKey());
         boolean lastPage = false;
+        queryUrl = apiUrl.concat("/commits?access_token="+ decryptedPersonalAccessToken +"&sha=" + repo.getBranch()
+                + "&since=" + getTimeForApi(getRunDate(repo, firstRun)));
         String queryUrlPage = queryUrl;
         while (!lastPage) {
             LOG.info("Executing " + queryUrlPage);
